@@ -216,7 +216,8 @@ def parse_seat_matrix_pdf(file_bytes_or_path):
 
     df_inst = pd.DataFrame(institutes) if institutes else pd.DataFrame()
     df_cat = pd.DataFrame(category_rows) if category_rows else pd.DataFrame()
-    return df_inst, df_cat
+    return post_process_institute_grouping(df_inst, df_cat)
+
 
 def generate_sample_seat_matrix():
     """
@@ -438,4 +439,91 @@ def generate_sample_seat_matrix():
 
     df_inst = pd.DataFrame(inst_list)
     df_cat = pd.DataFrame(cat_list)
+    return post_process_institute_grouping(df_inst, df_cat)
+
+def post_process_institute_grouping(df_inst, df_cat):
+    """
+    Groups all parsed/generated rows by the 4/5-digit DTE Institute Code derived from Choice Code.
+    Propagates Institute Name, Region / City, Status, and University Name across ALL courses/shifts
+    under that Institute Code, eliminating missing data points!
+    """
+    if df_inst is None or df_inst.empty:
+        return df_inst, df_cat
+
+    # 1. Helper to extract 4 or 5 digit Institute Code from Choice Code or Institute Code
+    def extract_inst_code(row):
+        code = str(row.get("Institute Code", "")).strip()
+        if code and code != "None" and code != "" and code.isdigit():
+            return code
+        choice = str(row.get("Choice Code", "")).strip().lstrip('0')
+        if len(choice) >= 9:
+            return choice[:-5]
+        elif len(choice) >= 4:
+            return choice[:4]
+        return code
+
+    df_inst["Base_Inst_Code"] = df_inst.apply(extract_inst_code, axis=1)
+
+    # 2. Build master metadata mapping for each Base_Inst_Code (Name, Region, Status, Univ)
+    inst_metadata_map = {}
+    for code, group in df_inst.groupby("Base_Inst_Code"):
+        best_name = ""
+        best_region = "Other Region"
+        best_status = "Un-Aided"
+        best_univ = ""
+        
+        for _, row in group.iterrows():
+            curr_name = str(row.get("Institute Name", "")).strip()
+            curr_region = str(row.get("Region / City", "")).strip()
+            curr_status = str(row.get("Status", "")).strip()
+            curr_univ = str(row.get("University Name", "")).strip()
+
+            if len(curr_name) > len(best_name):
+                best_name = curr_name
+            if curr_region != "Other Region" and best_region == "Other Region":
+                best_region = curr_region
+            if curr_status:
+                best_status = curr_status
+            if curr_univ:
+                best_univ = curr_univ
+
+        inst_metadata_map[code] = {
+            "Institute Name": best_name,
+            "Region / City": best_region,
+            "Status": best_status,
+            "University Name": best_univ
+        }
+
+    # 3. Propagate master metadata to all institute rows
+    for idx, row in df_inst.iterrows():
+        code = row["Base_Inst_Code"]
+        if code in inst_metadata_map:
+            meta = inst_metadata_map[code]
+            if meta["Institute Name"]:
+                df_inst.at[idx, "Institute Name"] = meta["Institute Name"]
+            if meta["Region / City"] != "Other Region":
+                df_inst.at[idx, "Region / City"] = meta["Region / City"]
+            if meta["Status"]:
+                df_inst.at[idx, "Status"] = meta["Status"]
+            if meta["University Name"]:
+                df_inst.at[idx, "University Name"] = meta["University Name"]
+
+    # 4. Propagate master metadata to df_cat rows
+    if df_cat is not None and not df_cat.empty:
+        df_cat["Base_Inst_Code"] = df_cat.apply(extract_inst_code, axis=1)
+        for idx, row in df_cat.iterrows():
+            code = row["Base_Inst_Code"]
+            if code in inst_metadata_map:
+                meta = inst_metadata_map[code]
+                if meta["Institute Name"]:
+                    df_cat.at[idx, "Institute Name"] = meta["Institute Name"]
+                if meta["Region / City"] != "Other Region":
+                    df_cat.at[idx, "Region / City"] = meta["Region / City"]
+
+    # Clean up temporary helper column
+    df_inst.drop(columns=["Base_Inst_Code"], errors="ignore", inplace=True)
+    if df_cat is not None and not df_cat.empty:
+        df_cat.drop(columns=["Base_Inst_Code"], errors="ignore", inplace=True)
+
     return df_inst, df_cat
+
