@@ -24,10 +24,12 @@ st.set_page_config(
     initial_sidebar_state="expanded",
     menu_items=None
 )
-# Button to force the sidebar open if closed
-if st.button("Force Open Sidebar"):
-    st.session_state.sidebar_state = "expanded"
-    st.rerun()
+## Initialize a session state variable that tracks the sidebar state (either 'expanded' or 'collapsed').
+if 'sidebar_state' not in st.session_state:
+    st.session_state.sidebar_state = 'expanded'
+
+# Streamlit set_page_config method has a 'initial_sidebar_state' argument that controls sidebar state.
+st.set_page_config(initial_sidebar_state=st.session_state.sidebar_state)
 
 hide_streamlit_style = """
             <style>
