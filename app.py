@@ -72,31 +72,23 @@ header[data-testid="stHeader"] {{
     z-index: 100000 !important;
 }}
 
-/* ── Footer / Branding / Creator Badge hiding (inside iframe) ── */
+/* ── Footer / Branding hiding — SAFE selectors only (no sidebar collateral) ── */
 footer, footer:after,
-#MainMenu, #stDecoration,
+#MainMenu,
+#stDecoration,
 .stDeployButton,
 [data-testid="stDecoration"],
 [data-testid="stViewerBadge"],
 [data-testid="stToolbar"],
 [data-testid="stFooter"],
 [data-testid="stReportViewFooter"],
-[data-testid="stStatusWidget"],
 .viewerBadge_container__1BShK,
 .viewerBadge_link__1S137,
 div[class*="viewerBadge"],
 div[class*="stDeployButton"],
-div[class*="profile"],
-div[class*="Profile"],
-div[class*="footer"],
-div[class*="Footer"],
 div[class*="HostedWith"],
 div[class*="styles_viewerBadge"],
-div[class*="embeddedAppMetaInfoBar"],
-a[href*="github.com"],
-a[href*="streamlit.io"],
-a[href*="share.streamlit.io"],
-footer *, footer a {{
+div[class*="embeddedAppMetaInfoBar"] {{
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;
@@ -110,6 +102,8 @@ footer *, footer a {{
     position: absolute !important;
     left: -9999px !important;
 }}
+
+
 
 
 .block-container {{
