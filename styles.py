@@ -42,10 +42,28 @@ def inject_styles(is_dark=True):
         font-family: 'DM Sans', -apple-system, sans-serif !important;
     }}
 
+    /* Sidebar Styling - Perfectly synced with App Theme */
+    section[data-testid="stSidebar"], 
+    div[data-testid="stSidebarContent"], 
+    div[data-testid="stSidebarHeader"], 
+    [data-testid="stSidebarNav"] {{
+        background-color: var(--bg-subtle) !important;
+        border-right: 1px solid var(--border) !important;
+        color: var(--text) !important;
+    }}
+    
+    section[data-testid="stSidebar"] label,
+    section[data-testid="stSidebar"] .stMarkdown,
+    section[data-testid="stSidebar"] span,
+    section[data-testid="stSidebar"] p {{
+        color: var(--text) !important;
+    }}
+
     /* Transparent top header bar */
     header[data-testid="stHeader"] {{
         background: transparent !important;
     }}
+
 
     /* Global Container Spacing */
     .block-container {{

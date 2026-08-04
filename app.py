@@ -49,7 +49,6 @@ with h_col1:
 with h_col2:
     render_theme_toggle()
 
-
 st.markdown("<hr style='border: none; border-top: 1px solid var(--border); margin: 0.5rem 0 1.25rem 0;' />", unsafe_allow_html=True)
 
 # 6. Data Loading & Master Data Setup
