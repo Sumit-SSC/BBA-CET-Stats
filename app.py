@@ -72,41 +72,8 @@ header[data-testid="stHeader"] {{
     z-index: 100000 !important;
 }}
 
-/* ── Footer / Branding hiding — SAFE selectors only (no sidebar collateral) ── */
-footer, footer:after,
-#MainMenu,
-#stDecoration,
-.stDeployButton,
-[data-testid="stDecoration"],
-[data-testid="stViewerBadge"],
-[data-testid="stFooter"],
-[data-testid="stReportViewFooter"],
-
-.viewerBadge_container__1BShK,
-.viewerBadge_link__1S137,
-div[class*="viewerBadge"],
-div[class*="stDeployButton"],
-div[class*="HostedWith"],
-div[class*="styles_viewerBadge"],
-div[class*="embeddedAppMetaInfoBar"] {{
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    height: 0px !important;
-    width: 0px !important;
-    max-height: 0px !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: hidden !important;
-    pointer-events: none !important;
-    position: absolute !important;
-    left: -9999px !important;
-}}
-
-
-
-
 .block-container {{
+
 
     padding: 1.5rem 1.5rem 2.5rem !important;
     max-width: 1440px !important;
