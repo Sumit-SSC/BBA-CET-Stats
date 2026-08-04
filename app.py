@@ -106,6 +106,7 @@ footer a {{
     left: -9999px !important;
 }}
 
+
 /* Button styling fixes for Light & Dark mode contrast */
 button[data-baseweb="button"], .stButton > button {{
     background-color: var(--bg-subtle) !important;
