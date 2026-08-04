@@ -9,6 +9,16 @@ import plotly.graph_objects as go
 import io
 import re
 
+# Add custom CSS to hide the GitHub icon
+hide_st_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            header {visibility: hidden;}
+            footer {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_st_style, unsafe_allow_html=True)
+
 # 1. Page Configuration MUST be the FIRST Streamlit call
 st.set_page_config(
     page_title="MAH-CET Seat Matrix & Full State Analytics",
