@@ -80,6 +80,22 @@ def inject_styles(is_dark=True):
         background: transparent !important;
     }}
 
+    /* Hide Fork button, GitHub source button, and Main Menu 3-dots icon */
+    #MainMenu,
+    .stDeployButton,
+    button[aria-label="Fork this app"],
+    button[aria-label="View app source"],
+    button[aria-label="Main menu"],
+    [data-testid="stHeader"] button[aria-label="Fork this app"],
+    [data-testid="stHeader"] button[aria-label="View app source"],
+    [data-testid="stHeader"] button[aria-label="Main menu"],
+    [data-testid="stHeader"] a[href*="github.com"] {{
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+    }}
+
+
 
     /* Global Container Spacing */
     .block-container {{
