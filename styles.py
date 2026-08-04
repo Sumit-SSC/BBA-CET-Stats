@@ -42,22 +42,38 @@ def inject_styles(is_dark=True):
         font-family: 'DM Sans', -apple-system, sans-serif !important;
     }}
 
-    /* Sidebar Styling - Perfectly synced with App Theme */
-    section[data-testid="stSidebar"], 
-    div[data-testid="stSidebarContent"], 
-    div[data-testid="stSidebarHeader"], 
+    /* Sidebar Background & Text - High-Contrast Synchronization */
+    section[data-testid="stSidebar"],
+    section[data-testid="stSidebar"] > div,
+    div[data-testid="stSidebarContent"],
+    div[data-testid="stSidebarHeader"],
+    div[data-testid="stSidebarUserContent"],
     [data-testid="stSidebarNav"] {{
-        background-color: var(--bg-subtle) !important;
-        border-right: 1px solid var(--border) !important;
-        color: var(--text) !important;
+        background-color: {"#0d0e12" if is_dark else "#f1f5f9"} !important;
+        color: {"#f8fafc" if is_dark else "#0f172a"} !important;
     }}
-    
+
+    section[data-testid="stSidebar"] {{
+        border-right: 1px solid {"#27272a" if is_dark else "#cbd5e1"} !important;
+    }}
+
+    /* Sidebar Headings, Labels, Markdown & Radio Option Text */
+    section[data-testid="stSidebar"] h1,
+    section[data-testid="stSidebar"] h2,
+    section[data-testid="stSidebar"] h3,
+    section[data-testid="stSidebar"] h4,
+    section[data-testid="stSidebar"] h5,
+    section[data-testid="stSidebar"] h6,
     section[data-testid="stSidebar"] label,
-    section[data-testid="stSidebar"] .stMarkdown,
+    section[data-testid="stSidebar"] p,
     section[data-testid="stSidebar"] span,
-    section[data-testid="stSidebar"] p {{
-        color: var(--text) !important;
+    section[data-testid="stSidebar"] .stMarkdown,
+    section[data-testid="stSidebar"] [data-testid="stWidgetLabel"] p,
+    section[data-testid="stSidebar"] [data-testid="stRadio"] label p,
+    section[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p {{
+        color: {"#f8fafc" if is_dark else "#0f172a"} !important;
     }}
+
 
     /* Transparent top header bar */
     header[data-testid="stHeader"] {{
