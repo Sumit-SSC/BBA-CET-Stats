@@ -1,0 +1,18 @@
+# Python virtual environment & cache
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Streamlit & IDE configs
+.streamlit/
+.vscode/
+.idea/
+
+# Large media / pdfs / temp data
+*.pdf
+*.csv
+*.xlsx
