@@ -44,56 +44,6 @@ def toggle_theme():
 
 IS_DARK = st.session_state.theme == "dark"
 
-
-# 3.5. Parent Window JS DOM Eraser (Removes Streamlit Cloud "Created With" Badge & Creator Avatar)
-import streamlit.components.v1 as components
-components.html("""
-<script>
-function eraseStreamlitBranding() {
-    const targets = [
-        'footer',
-        '#MainMenu',
-        '.stDeployButton',
-        '[data-testid="stDecoration"]',
-        '[data-testid="stViewerBadge"]',
-        '[data-testid="stToolbar"]',
-        '[data-testid="stFooter"]',
-        '[data-testid="stReportViewFooter"]',
-        '.viewerBadge_container__1BShK',
-        '.viewerBadge_link__1S137',
-        'div[class*="viewerBadge"]',
-        'div[class*="profile"]',
-        'div[class*="Profile"]',
-        'div[class*="HostedWith"]',
-        'a[href*="github.com"]',
-        'a[href*="streamlit.io"]',
-        'a[href*="share.streamlit.io"]'
-    ];
-    targets.forEach(t => {
-        try {
-            if (window.parent && window.parent.document) {
-                window.parent.document.querySelectorAll(t).forEach(el => {
-                    el.style.display = 'none';
-                    el.style.visibility = 'hidden';
-                    el.remove();
-                });
-            }
-        } catch(e){}
-        try {
-            document.querySelectorAll(t).forEach(el => {
-                el.style.display = 'none';
-                el.style.visibility = 'hidden';
-                el.remove();
-            });
-        } catch(e){}
-    });
-}
-eraseStreamlitBranding();
-setInterval(eraseStreamlitBranding, 300);
-</script>
-""", height=0, width=0)
-
-
 # 4. Plotly Helper
 def apply_plot_style(fig, height=330, reverse_y=False):
     fig.update_layout(
