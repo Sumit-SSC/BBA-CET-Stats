@@ -66,16 +66,27 @@ header[data-testid="stHeader"] {{
     z-index: 100000 !important;
 }}
 
-/* Hide ONLY footer, deployment badges, and GitHub profile links */
+/* Hide all Streamlit Cloud footers, deployment badges, creator profiles, and GitHub links */
 footer, 
+#MainMenu, 
 .stDeployButton, 
 [data-testid="stDecoration"], 
 [data-testid="stViewerBadge"],
+[data-testid="stHeader"] button[aria-label="View app source"],
+[data-testid="stToolbar"],
+[data-testid="stFooter"],
+[data-testid="stReportViewFooter"],
+[data-testid="stStatusWidget"],
 .viewerBadge_container__1BShK,
 .viewerBadge_link__1S137,
-[data-testid="stHeader"] button[aria-label="View app source"],
 div[class*="viewerBadge"],
 div[class*="stDeployButton"],
+div[class*="profile"],
+div[class*="Profile"],
+div[class*="footer"],
+div[class*="Footer"],
+a[href*="github.com"],
+a[href*="streamlit.io"],
 footer *, 
 footer a {{
     display: none !important;
@@ -83,6 +94,8 @@ footer a {{
     opacity: 0 !important;
     height: 0 !important;
     width: 0 !important;
+    max-height: 0 !important;
+    overflow: hidden !important;
     pointer-events: none !important;
 }}
 
