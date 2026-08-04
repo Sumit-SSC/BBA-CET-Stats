@@ -9,6 +9,16 @@ import plotly.graph_objects as go
 import io
 import re
 
+# Add custom CSS to hide the GitHub icon
+hide_st_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            header {visibility: hidden;}
+            footer {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_st_style, unsafe_allow_html=True)
+
 # Clear any stale Streamlit data cache on load
 st.cache_data.clear()
 
@@ -24,20 +34,6 @@ st.set_page_config(
     initial_sidebar_state="expanded",
     menu_items=None
 )
-## Initialize a session state variable that tracks the sidebar state (either 'expanded' or 'collapsed').
-if 'sidebar_state' not in st.session_state:
-    st.session_state.sidebar_state = 'expanded'
-
-# Streamlit set_page_config method has a 'initial_sidebar_state' argument that controls sidebar state.
-st.set_page_config(initial_sidebar_state=st.session_state.sidebar_state)
-
-hide_streamlit_style = """
-            <style>
-            MainMenu {visibility: hidden;}
-            #footer {visibility: hidden;}
-            </style>
-            """
-st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 # 2. Theme State Setup
 
