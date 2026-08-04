@@ -13,7 +13,6 @@ import re
 hide_st_style = """
             <style>
             #MainMenu {visibility: hidden;}
-            header {visibility: hidden;}
             footer {visibility: hidden;}
             </style>
             """
@@ -38,7 +37,7 @@ st.set_page_config(
 # 2. Theme State Setup
 
 if "theme" not in st.session_state:
-    st.session_state.theme = "light"
+    st.session_state.theme = "dark"
 
 def toggle_theme():
     st.session_state.theme = "dark" if st.session_state.theme == "light" else "light"
@@ -196,7 +195,7 @@ button[data-baseweb="button"]:hover, .stButton > button:hover {{
 [data-testid="stSidebarCollapseButton"],
 button[aria-label="Expand sidebar"], 
 button[aria-label="Collapse sidebar"],
-header[data-testid="stHeader"] button {{
+{{
     display: flex !important;
     visibility: visible !important;
     opacity: 1 !important;
