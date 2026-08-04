@@ -16,8 +16,10 @@ st.set_page_config(
     page_title="MAH-CET Seat Matrix & Full State Analytics",
     page_icon="🎓",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="expanded",
+    menu_items=None
 )
+
 
 # 2. Theme State Setup
 if "theme" not in st.session_state:
@@ -53,7 +55,9 @@ hide_streamlit_style = """
     div[class*="Footer"],
     div[class*="HostedWith"],
     div[class*="styles_viewerBadge"],
+    div[class*="embeddedAppMetaInfoBar"],
     a[href*="github.com"],
+
     a[href*="streamlit.io"],
     a[href*="share.streamlit.io"],
     footer *, 
