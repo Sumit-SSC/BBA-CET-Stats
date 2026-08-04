@@ -3,20 +3,12 @@ import sys
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 import streamlit as st
+import streamlit.components.v1 as components
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import io
 import re
-
-# Add custom CSS to hide the GitHub icon
-hide_st_style = """
-            <style>
-            #MainMenu {visibility: hidden;}
-            footer {visibility: hidden;}
-            </style>
-            """
-st.markdown(hide_st_style, unsafe_allow_html=True)
 
 # Clear any stale Streamlit data cache on load
 st.cache_data.clear()
@@ -24,8 +16,7 @@ st.cache_data.clear()
 # Import PDF parsing module
 from pdf_parser import parse_seat_matrix_pdf, generate_sample_seat_matrix, extract_city_from_name
 
-
-# 1. Page Configuration
+# 1. Page Configuration  — MUST be first Streamlit call
 st.set_page_config(
     page_title="MAH-CET Seat Matrix & Full State Analytics",
     page_icon="🎓",
@@ -35,7 +26,6 @@ st.set_page_config(
 )
 
 # 2. Theme State Setup
-
 if "theme" not in st.session_state:
     st.session_state.theme = "dark"
 
@@ -44,7 +34,247 @@ def toggle_theme():
 
 IS_DARK = st.session_state.theme == "dark"
 
-# 4. Plotly Helper
+# 3. CSS Design System + Footer Masking
+theme_vars = f"""
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+
+:root {{
+    --bg: {"#09090b" if IS_DARK else "#f8fafc"};
+    --bg-subtle: {"#0c0c0f" if IS_DARK else "#f1f5f9"};
+    --card: {"#111115" if IS_DARK else "#ffffff"};
+    --card-hover: {"#16161c" if IS_DARK else "#f8fafc"};
+    --border: {"#27272a" if IS_DARK else "#cbd5e1"};
+    --border-subtle: {"#1e1e24" if IS_DARK else "#e2e8f0"};
+    --text: {"#fafafa" if IS_DARK else "#0f172a"};
+    --text-muted: {"#a1a1aa" if IS_DARK else "#475569"};
+    --text-dim: {"#71717a" if IS_DARK else "#64748b"};
+    --accent: #2563eb;
+    --accent-light: {"#1e3a8a" if IS_DARK else "#dbeafe"};
+    --green: {"#22c55e" if IS_DARK else "#16a34a"};
+    --green-muted: {"rgba(34,197,94,0.15)" if IS_DARK else "rgba(22,163,74,0.1)"};
+    --amber: {"#f59e0b" if IS_DARK else "#d97706"};
+    --amber-muted: {"rgba(245,158,11,0.15)" if IS_DARK else "rgba(217,119,6,0.1)"};
+    --purple: {"#a855f7" if IS_DARK else "#7c3aed"};
+    --purple-muted: {"rgba(168,85,247,0.15)" if IS_DARK else "rgba(124,58,237,0.1)"};
+    --radius: 12px;
+}}
+
+html, body, [data-testid="stAppViewContainer"], [data-testid="stApp"], .main, section[data-testid="stMain"] {{
+    background-color: var(--bg) !important;
+    color: var(--text) !important;
+    font-family: 'DM Sans', -apple-system, sans-serif !important;
+}}
+
+/* Transparent top header */
+header[data-testid="stHeader"] {{
+    background: transparent !important;
+    z-index: 100000 !important;
+}}
+
+/* ── Footer / Branding / Creator Badge hiding (inside iframe) ── */
+footer, footer:after,
+#MainMenu, #stDecoration,
+.stDeployButton,
+[data-testid="stDecoration"],
+[data-testid="stViewerBadge"],
+[data-testid="stToolbar"],
+[data-testid="stFooter"],
+[data-testid="stReportViewFooter"],
+[data-testid="stStatusWidget"],
+.viewerBadge_container__1BShK,
+.viewerBadge_link__1S137,
+div[class*="viewerBadge"],
+div[class*="stDeployButton"],
+div[class*="profile"],
+div[class*="Profile"],
+div[class*="footer"],
+div[class*="Footer"],
+div[class*="HostedWith"],
+div[class*="styles_viewerBadge"],
+div[class*="embeddedAppMetaInfoBar"],
+a[href*="github.com"],
+a[href*="streamlit.io"],
+a[href*="share.streamlit.io"],
+footer *, footer a {{
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0px !important;
+    width: 0px !important;
+    max-height: 0px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
+    position: absolute !important;
+    left: -9999px !important;
+}}
+
+/* ── Sidebar collapse/expand button — always visible & bright ── */
+[data-testid="collapsedControl"],
+[data-testid="stSidebarCollapseButton"],
+button[aria-label="Expand sidebar"],
+button[aria-label="Collapse sidebar"],
+button[aria-label="Open sidebar"],
+header[data-testid="stHeader"] button {{
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    position: fixed !important;
+    z-index: 9999999 !important;
+}}
+[data-testid="collapsedControl"] {{
+    top: 14px !important;
+    left: 14px !important;
+    background: #2563eb !important;
+    color: #ffffff !important;
+    border-radius: 8px !important;
+    padding: 6px 10px !important;
+    box-shadow: 0 4px 12px rgba(37,99,235,0.4) !important;
+    border: 1px solid #1d4ed8 !important;
+    cursor: pointer !important;
+}}
+[data-testid="collapsedControl"] svg,
+[data-testid="stSidebarCollapseButton"] svg,
+button[aria-label="Expand sidebar"] svg,
+button[aria-label="Collapse sidebar"] svg {{
+    fill: #ffffff !important;
+    color: #ffffff !important;
+    stroke: #ffffff !important;
+    width: 20px !important;
+    height: 20px !important;
+}}
+
+.block-container {{
+    padding: 1.5rem 1.5rem 2.5rem !important;
+    max-width: 1440px !important;
+}}
+
+/* Button styling */
+button[data-baseweb="button"], .stButton > button {{
+    background-color: var(--bg-subtle) !important;
+    color: var(--text) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    transition: all 0.2s ease !important;
+    font-size: 0.78rem !important;
+    padding: 0.35rem 0.5rem !important;
+}}
+button[data-baseweb="button"]:hover, .stButton > button:hover {{
+    border-color: #2563eb !important;
+    color: #2563eb !important;
+    background-color: var(--accent-light) !important;
+}}
+
+.insight-banner {{
+    background: {"#1e293b" if IS_DARK else "#eff6ff"};
+    border: 1px solid {"#334155" if IS_DARK else "#bfdbfe"};
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--text);
+}}
+.insight-banner h4 {{ margin: 0 0 0.5rem 0; color: #2563eb; font-weight: 800; font-size: 1.05rem; }}
+.insight-banner ul {{ margin: 0; padding-left: 1.2rem; font-size: 0.88rem; line-height: 1.6; }}
+
+.metric-card {{
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.25rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    transition: all 0.2s ease;
+}}
+.metric-card:hover {{ border-color: var(--accent); transform: translateY(-1px); }}
+.metric-label {{ font-size: 0.75rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }}
+.metric-value {{ font-size: 1.7rem; font-weight: 700; color: var(--text); letter-spacing: -0.03em; margin-top: 0.2rem; font-family: 'JetBrains Mono', monospace; }}
+.metric-subtitle {{ font-size: 0.72rem; color: var(--text-dim); margin-top: 0.25rem; }}
+
+.table-responsive {{
+    width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    background: var(--card);
+}}
+.seat-matrix-table {{
+    width: 100%; min-width: 650px; border-collapse: collapse;
+    font-size: 0.8rem; background: var(--card);
+}}
+.seat-matrix-table th {{
+    background: var(--bg-subtle); color: var(--text-muted); font-weight: 700;
+    padding: 0.45rem 0.35rem; text-align: center; border: 1px solid var(--border);
+    font-size: 0.72rem; text-transform: uppercase; white-space: nowrap;
+}}
+.seat-matrix-table td {{
+    padding: 0.4rem 0.35rem; text-align: center; border: 1px solid var(--border-subtle);
+    color: var(--text); font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; white-space: nowrap;
+}}
+.seat-matrix-table tr.header-row th {{ background: #2563eb; color: #ffffff; font-weight: 700; }}
+.seat-matrix-table tr.sub-header th {{ background: var(--bg-subtle); color: var(--text); }}
+.seat-matrix-table tr.quota-row td {{ font-weight: 600; }}
+
+.badge {{ display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; }}
+.badge-blue {{ color: #2563eb; background: var(--accent-light); }}
+.badge-green {{ color: var(--green); background: var(--green-muted); }}
+.badge-amber {{ color: var(--amber); background: var(--amber-muted); }}
+.badge-purple {{ color: var(--purple); background: var(--purple-muted); }}
+
+button[data-baseweb="tab"] {{
+    background: transparent !important; color: var(--text-muted) !important;
+    font-size: 0.88rem !important; font-weight: 600 !important;
+    padding: 0.6rem 1.25rem !important; border-radius: 8px !important;
+}}
+button[data-baseweb="tab"][aria-selected="true"] {{ color: #ffffff !important; background: #2563eb !important; }}
+[data-baseweb="tab-highlight"], [data-baseweb="tab-border"] {{ display: none !important; }}
+[data-baseweb="tab-list"] {{
+    gap: 6px !important; background: var(--bg-subtle) !important;
+    border: 1px solid var(--border) !important; border-radius: 12px !important;
+    padding: 4px; margin-bottom: 1.5rem !important;
+}}
+</style>
+"""
+st.markdown(theme_vars, unsafe_allow_html=True)
+
+# 3.5. Parent-frame JS eraser — runs every 300ms to remove Streamlit Cloud creator badge
+components.html("""
+<script>
+function eraseStreamlitBranding() {
+    var targets = [
+        'footer', '#MainMenu', '.stDeployButton',
+        '[data-testid="stDecoration"]', '[data-testid="stViewerBadge"]',
+        '[data-testid="stToolbar"]', '[data-testid="stFooter"]',
+        '[data-testid="stReportViewFooter"]',
+        '.viewerBadge_container__1BShK', '.viewerBadge_link__1S137',
+        'div[class*="viewerBadge"]', 'div[class*="profile"]',
+        'div[class*="Profile"]', 'div[class*="HostedWith"]',
+        'div[class*="embeddedAppMetaInfoBar"]',
+        'a[href*="github.com"]', 'a[href*="streamlit.io"]'
+    ];
+    [document, window.parent ? window.parent.document : null].forEach(function(doc) {
+        if (!doc) return;
+        targets.forEach(function(sel) {
+            try {
+                doc.querySelectorAll(sel).forEach(function(el) {
+                    el.style.cssText = 'display:none!important;visibility:hidden!important;opacity:0!important;height:0!important;';
+                    el.remove();
+                });
+            } catch(e) {}
+        });
+    });
+}
+eraseStreamlitBranding();
+setInterval(eraseStreamlitBranding, 300);
+</script>
+""", height=0, width=0)
+
+
 def apply_plot_style(fig, height=330, reverse_y=False):
     fig.update_layout(
         paper_bgcolor="rgba(0,0,0,0)",
