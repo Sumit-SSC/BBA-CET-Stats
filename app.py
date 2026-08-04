@@ -66,7 +66,7 @@ header[data-testid="stHeader"] {{
     z-index: 100000 !important;
 }}
 
-/* Hide all Streamlit Cloud footers, deployment badges, creator profiles, and GitHub links */
+/* Ultra-aggressive hiding of all footers, viewer badges, Streamlit branding, and profile avatars */
 footer, 
 #MainMenu, 
 .stDeployButton, 
@@ -85,18 +85,25 @@ div[class*="profile"],
 div[class*="Profile"],
 div[class*="footer"],
 div[class*="Footer"],
+div[class*="HostedWith"],
+div[class*="styles_viewerBadge"],
 a[href*="github.com"],
 a[href*="streamlit.io"],
+a[href*="share.streamlit.io"],
 footer *, 
 footer a {{
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;
-    height: 0 !important;
-    width: 0 !important;
-    max-height: 0 !important;
+    height: 0px !important;
+    width: 0px !important;
+    max-height: 0px !important;
+    margin: 0 !important;
+    padding: 0 !important;
     overflow: hidden !important;
     pointer-events: none !important;
+    position: absolute !important;
+    left: -9999px !important;
 }}
 
 /* Button styling fixes for Light & Dark mode contrast */
@@ -302,6 +309,55 @@ button[data-baseweb="tab"][aria-selected="true"] {{
 </style>
 """
 st.markdown(theme_vars, unsafe_allow_html=True)
+
+# 3.5. Parent Window JS DOM Eraser (Removes Streamlit Cloud "Created With" Badge & Creator Avatar)
+import streamlit.components.v1 as components
+components.html("""
+<script>
+function eraseStreamlitBranding() {
+    const targets = [
+        'footer',
+        '#MainMenu',
+        '.stDeployButton',
+        '[data-testid="stDecoration"]',
+        '[data-testid="stViewerBadge"]',
+        '[data-testid="stToolbar"]',
+        '[data-testid="stFooter"]',
+        '[data-testid="stReportViewFooter"]',
+        '.viewerBadge_container__1BShK',
+        '.viewerBadge_link__1S137',
+        'div[class*="viewerBadge"]',
+        'div[class*="profile"]',
+        'div[class*="Profile"]',
+        'div[class*="HostedWith"]',
+        'a[href*="github.com"]',
+        'a[href*="streamlit.io"]',
+        'a[href*="share.streamlit.io"]'
+    ];
+    targets.forEach(t => {
+        try {
+            if (window.parent && window.parent.document) {
+                window.parent.document.querySelectorAll(t).forEach(el => {
+                    el.style.display = 'none';
+                    el.style.visibility = 'hidden';
+                    el.remove();
+                });
+            }
+        } catch(e){}
+        try {
+            document.querySelectorAll(t).forEach(el => {
+                el.style.display = 'none';
+                el.style.visibility = 'hidden';
+                el.remove();
+            });
+        } catch(e){}
+    });
+}
+eraseStreamlitBranding();
+setInterval(eraseStreamlitBranding, 300);
+</script>
+""", height=0, width=0)
+
 
 # 4. Plotly Helper
 def apply_plot_style(fig, height=330, reverse_y=False):
