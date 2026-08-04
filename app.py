@@ -190,42 +190,42 @@ button[data-baseweb="button"]:hover, .stButton > button:hover {{
     background-color: var(--accent-light) !important;
 }}
 
-/* Ensure sidebar collapse/expand toggle button is ALWAYS bright & accessible */
-[data-testid="collapsedControl"], 
-[data-testid="stSidebarCollapseButton"],
-button[aria-label="Expand sidebar"], 
-button[aria-label="Collapse sidebar"],
-{{
-    display: flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    pointer-events: auto !important;
-}}
+# /* Ensure sidebar collapse/expand toggle button is ALWAYS bright & accessible */
+# [data-testid="collapsedControl"], 
+# [data-testid="stSidebarCollapseButton"],
+# button[aria-label="Expand sidebar"], 
+# button[aria-label="Collapse sidebar"],
+# {{
+#     display: flex !important;
+#     visibility: visible !important;
+#     opacity: 1 !important;
+#     pointer-events: auto !important;
+# }}
 
-[data-testid="collapsedControl"] {{
-    position: fixed !important;
-    top: 14px !important;
-    left: 14px !important;
-    z-index: 9999999 !important;
-    background: #2563eb !important;
-    color: #ffffff !important;
-    border-radius: 8px !important;
-    padding: 6px 10px !important;
-    box-shadow: 0 4px 12px rgba(37,99,235,0.4) !important;
-    border: 1px solid #1d4ed8 !important;
-    cursor: pointer !important;
-}}
+# [data-testid="collapsedControl"] {{
+#     position: fixed !important;
+#     top: 14px !important;
+#     left: 14px !important;
+#     z-index: 9999999 !important;
+#     background: #2563eb !important;
+#     color: #ffffff !important;
+#     border-radius: 8px !important;
+#     padding: 6px 10px !important;
+#     box-shadow: 0 4px 12px rgba(37,99,235,0.4) !important;
+#     border: 1px solid #1d4ed8 !important;
+#     cursor: pointer !important;
+# }}
 
-[data-testid="collapsedControl"] svg,
-[data-testid="stSidebarCollapseButton"] svg,
-button[aria-label="Expand sidebar"] svg,
-button[aria-label="Collapse sidebar"] svg {{
-    fill: #ffffff !important;
-    color: #ffffff !important;
-    stroke: #ffffff !important;
-    width: 20px !important;
-    height: 20px !important;
-}}
+# [data-testid="collapsedControl"] svg,
+# [data-testid="stSidebarCollapseButton"] svg,
+# button[aria-label="Expand sidebar"] svg,
+# button[aria-label="Collapse sidebar"] svg {{
+#     fill: #ffffff !important;
+#     color: #ffffff !important;
+#     stroke: #ffffff !important;
+#     width: 20px !important;
+#     height: 20px !important;
+# }}
 
 .block-container {{
     padding: 1.5rem 1.5rem 2.5rem !important;
