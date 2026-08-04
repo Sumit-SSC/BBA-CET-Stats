@@ -75,25 +75,40 @@ def inject_styles(is_dark=True):
     }}
 
 
-    /* Transparent top header bar */
-    header[data-testid="stHeader"] {{
-        background: transparent !important;
-    }}
-
-    /* Hide Fork button, GitHub source button, and Main Menu 3-dots icon */
+    /* Hide top header bar, Fork button, GitHub icon, and Main Menu 3-dots button */
+    header[data-testid="stHeader"],
+    [data-testid="stHeader"],
+    [data-testid="stHeaderActionElements"],
+    [data-testid="stHeaderForkButton"],
+    .stAppHeader,
     #MainMenu,
     .stDeployButton,
-    button[aria-label="Fork this app"],
-    button[aria-label="View app source"],
-    button[aria-label="Main menu"],
-    [data-testid="stHeader"] button[aria-label="Fork this app"],
-    [data-testid="stHeader"] button[aria-label="View app source"],
-    [data-testid="stHeader"] button[aria-label="Main menu"],
-    [data-testid="stHeader"] a[href*="github.com"] {{
+    button[aria-label*="Fork"],
+    button[title*="Fork"],
+    a[title*="Fork"],
+    a[href*="github.com"],
+    button[aria-label*="View app source"],
+    button[aria-label*="Main menu"],
+    div[class*="actionElements"],
+    div[class*="headerAction"] {{
         display: none !important;
         visibility: hidden !important;
         opacity: 0 !important;
+        height: 0px !important;
+        width: 0px !important;
+        overflow: hidden !important;
+        pointer-events: none !important;
     }}
+
+    /* Ensure sidebar collapse / expand toggle button is ALWAYS visible & clickable */
+    [data-testid="stSidebarCollapseButton"],
+    [data-testid="collapsedControl"] {{
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+    }}
+
 
 
 
