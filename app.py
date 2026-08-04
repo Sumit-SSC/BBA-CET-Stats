@@ -28,19 +28,53 @@ def toggle_theme():
 
 IS_DARK = st.session_state.theme == "dark"
 
-# Hide Streamlit footer and branding
+# Combined Streamlit Footer & Branding Masker (Legacy Sven-Bo Gist + Modern Streamlit 1.40+)
 hide_streamlit_style = """
     <style>
-    footer {visibility: hidden;}
-    footer:after {
-        content:'';
-        visibility: hidden;
+    footer, 
+    footer:after,
+    #MainMenu, 
+    #stDecoration,
+    .stDeployButton, 
+    [data-testid="stDecoration"], 
+    [data-testid="stViewerBadge"],
+    [data-testid="stHeader"] button[aria-label="View app source"],
+    [data-testid="stToolbar"],
+    [data-testid="stFooter"],
+    [data-testid="stReportViewFooter"],
+    [data-testid="stStatusWidget"],
+    .viewerBadge_container__1BShK,
+    .viewerBadge_link__1S137,
+    div[class*="viewerBadge"],
+    div[class*="stDeployButton"],
+    div[class*="profile"],
+    div[class*="Profile"],
+    div[class*="footer"],
+    div[class*="Footer"],
+    div[class*="HostedWith"],
+    div[class*="styles_viewerBadge"],
+    a[href*="github.com"],
+    a[href*="streamlit.io"],
+    a[href*="share.streamlit.io"],
+    footer *, 
+    footer a {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        height: 0px !important;
+        width: 0px !important;
+        max-height: 0px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+        pointer-events: none !important;
+        position: absolute !important;
+        left: -9999px !important;
     }
-    .stDeployButton {display:none;}
-    #stDecoration {display:none;}
     </style>
 """
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
 
 # 3. CSS Design System (Transparent Header, Hides Footer/Github Badges, Full-Width Responsive Tables)
 theme_vars = f"""
