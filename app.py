@@ -28,6 +28,20 @@ def toggle_theme():
 
 IS_DARK = st.session_state.theme == "dark"
 
+# Hide Streamlit footer and branding
+hide_streamlit_style = """
+    <style>
+    footer {visibility: hidden;}
+    footer:after {
+        content:'';
+        visibility: hidden;
+    }
+    .stDeployButton {display:none;}
+    #stDecoration {display:none;}
+    </style>
+"""
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
 # 3. CSS Design System (Transparent Header, Hides Footer/Github Badges, Full-Width Responsive Tables)
 theme_vars = f"""
 <style>
