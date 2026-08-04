@@ -25,6 +25,14 @@ st.set_page_config(
     menu_items=None
 )
 
+hide_streamlit_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
 # 2. Theme State Setup
 
 if "theme" not in st.session_state:
