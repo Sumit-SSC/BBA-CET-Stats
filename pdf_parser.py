@@ -525,5 +525,12 @@ def post_process_institute_grouping(df_inst, df_cat):
     if df_cat is not None and not df_cat.empty:
         df_cat.drop(columns=["Base_Inst_Code"], errors="ignore", inplace=True)
 
+    # 5. Sort DataFrames by Institute Code and Choice Code ascending
+    if "Institute Code" in df_inst.columns:
+        df_inst.sort_values(by=["Institute Code", "Choice Code"], ascending=True, inplace=True, ignore_index=True)
+    if df_cat is not None and not df_cat.empty and "Institute Code" in df_cat.columns:
+        df_cat.sort_values(by=["Institute Code", "Choice Code"], ascending=True, inplace=True, ignore_index=True)
+
     return df_inst, df_cat
+
 

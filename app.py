@@ -1,3 +1,7 @@
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -10,6 +14,7 @@ st.cache_data.clear()
 
 # Import PDF parsing module
 from pdf_parser import parse_seat_matrix_pdf, generate_sample_seat_matrix, extract_city_from_name
+
 
 # 1. Page Configuration
 st.set_page_config(
