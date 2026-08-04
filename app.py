@@ -60,143 +60,143 @@ theme_vars = f"""
     --radius: 12px;
 }}
 
-html, body, [data-testid="stAppViewContainer"], [data-testid="stApp"], .main, section[data-testid="stMain"] {{
-    background-color: var(--bg) !important;
-    color: var(--text) !important;
-    font-family: 'DM Sans', -apple-system, sans-serif !important;
-}}
+# html, body, [data-testid="stAppViewContainer"], [data-testid="stApp"], .main, section[data-testid="stMain"] {{
+#     background-color: var(--bg) !important;
+#     color: var(--text) !important;
+#     font-family: 'DM Sans', -apple-system, sans-serif !important;
+# }}
 
-/* Transparent top header */
-header[data-testid="stHeader"] {{
-    background: transparent !important;
-    z-index: 100000 !important;
-}}
+# /* Transparent top header */
+# header[data-testid="stHeader"] {{
+#     background: transparent !important;
+#     z-index: 100000 !important;
+# }}
 
-.block-container {{
+# .block-container {{
 
 
-    padding: 1.5rem 1.5rem 2.5rem !important;
-    max-width: 1440px !important;
-}}
+#     padding: 1.5rem 1.5rem 2.5rem !important;
+#     max-width: 1440px !important;
+# }}
 
-/* Button styling */
-button[data-baseweb="button"], .stButton > button {{
-    background-color: var(--bg-subtle) !important;
-    color: var(--text) !important;
-    border: 1px solid var(--border) !important;
-    border-radius: 8px !important;
-    font-weight: 600 !important;
-    transition: all 0.2s ease !important;
-    font-size: 0.78rem !important;
-    padding: 0.35rem 0.5rem !important;
-}}
-button[data-baseweb="button"]:hover, .stButton > button:hover {{
-    border-color: #2563eb !important;
-    color: #2563eb !important;
-    background-color: var(--accent-light) !important;
-}}
+# /* Button styling */
+# button[data-baseweb="button"], .stButton > button {{
+#     background-color: var(--bg-subtle) !important;
+#     color: var(--text) !important;
+#     border: 1px solid var(--border) !important;
+#     border-radius: 8px !important;
+#     font-weight: 600 !important;
+#     transition: all 0.2s ease !important;
+#     font-size: 0.78rem !important;
+#     padding: 0.35rem 0.5rem !important;
+# }}
+# button[data-baseweb="button"]:hover, .stButton > button:hover {{
+#     border-color: #2563eb !important;
+#     color: #2563eb !important;
+#     background-color: var(--accent-light) !important;
+# }}
 
-.insight-banner {{
-    background: {"#1e293b" if IS_DARK else "#eff6ff"};
-    border: 1px solid {"#334155" if IS_DARK else "#bfdbfe"};
-    border-radius: var(--radius);
-    padding: 1.25rem 1.5rem;
-    margin-bottom: 1.5rem;
-    color: var(--text);
-}}
-.insight-banner h4 {{ margin: 0 0 0.5rem 0; color: #2563eb; font-weight: 800; font-size: 1.05rem; }}
-.insight-banner ul {{ margin: 0; padding-left: 1.2rem; font-size: 0.88rem; line-height: 1.6; }}
+# .insight-banner {{
+#     background: {"#1e293b" if IS_DARK else "#eff6ff"};
+#     border: 1px solid {"#334155" if IS_DARK else "#bfdbfe"};
+#     border-radius: var(--radius);
+#     padding: 1.25rem 1.5rem;
+#     margin-bottom: 1.5rem;
+#     color: var(--text);
+# }}
+# .insight-banner h4 {{ margin: 0 0 0.5rem 0; color: #2563eb; font-weight: 800; font-size: 1.05rem; }}
+# .insight-banner ul {{ margin: 0; padding-left: 1.2rem; font-size: 0.88rem; line-height: 1.6; }}
 
-.metric-card {{
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1.1rem 1.25rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-    transition: all 0.2s ease;
-}}
-.metric-card:hover {{ border-color: var(--accent); transform: translateY(-1px); }}
-.metric-label {{ font-size: 0.75rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }}
-.metric-value {{ font-size: 1.7rem; font-weight: 700; color: var(--text); letter-spacing: -0.03em; margin-top: 0.2rem; font-family: 'JetBrains Mono', monospace; }}
-.metric-subtitle {{ font-size: 0.72rem; color: var(--text-dim); margin-top: 0.25rem; }}
+# .metric-card {{
+#     background: var(--card);
+#     border: 1px solid var(--border);
+#     border-radius: var(--radius);
+#     padding: 1.1rem 1.25rem;
+#     box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+#     transition: all 0.2s ease;
+# }}
+# .metric-card:hover {{ border-color: var(--accent); transform: translateY(-1px); }}
+# .metric-label {{ font-size: 0.75rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }}
+# .metric-value {{ font-size: 1.7rem; font-weight: 700; color: var(--text); letter-spacing: -0.03em; margin-top: 0.2rem; font-family: 'JetBrains Mono', monospace; }}
+# .metric-subtitle {{ font-size: 0.72rem; color: var(--text-dim); margin-top: 0.25rem; }}
 
-.table-responsive {{
-    width: 100% !important;
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    margin-top: 0.5rem;
-    margin-bottom: 1rem;
-    background: var(--card);
-}}
-.seat-matrix-table {{
-    width: 100%; min-width: 650px; border-collapse: collapse;
-    font-size: 0.8rem; background: var(--card);
-}}
-.seat-matrix-table th {{
-    background: var(--bg-subtle); color: var(--text-muted); font-weight: 700;
-    padding: 0.45rem 0.35rem; text-align: center; border: 1px solid var(--border);
-    font-size: 0.72rem; text-transform: uppercase; white-space: nowrap;
-}}
-.seat-matrix-table td {{
-    padding: 0.4rem 0.35rem; text-align: center; border: 1px solid var(--border-subtle);
-    color: var(--text); font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; white-space: nowrap;
-}}
-.seat-matrix-table tr.header-row th {{ background: #2563eb; color: #ffffff; font-weight: 700; }}
-.seat-matrix-table tr.sub-header th {{ background: var(--bg-subtle); color: var(--text); }}
-.seat-matrix-table tr.quota-row td {{ font-weight: 600; }}
+# .table-responsive {{
+#     width: 100% !important;
+#     overflow-x: auto !important;
+#     -webkit-overflow-scrolling: touch;
+#     border-radius: 8px;
+#     border: 1px solid var(--border);
+#     margin-top: 0.5rem;
+#     margin-bottom: 1rem;
+#     background: var(--card);
+# }}
+# .seat-matrix-table {{
+#     width: 100%; min-width: 650px; border-collapse: collapse;
+#     font-size: 0.8rem; background: var(--card);
+# }}
+# .seat-matrix-table th {{
+#     background: var(--bg-subtle); color: var(--text-muted); font-weight: 700;
+#     padding: 0.45rem 0.35rem; text-align: center; border: 1px solid var(--border);
+#     font-size: 0.72rem; text-transform: uppercase; white-space: nowrap;
+# }}
+# .seat-matrix-table td {{
+#     padding: 0.4rem 0.35rem; text-align: center; border: 1px solid var(--border-subtle);
+#     color: var(--text); font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; white-space: nowrap;
+# }}
+# .seat-matrix-table tr.header-row th {{ background: #2563eb; color: #ffffff; font-weight: 700; }}
+# .seat-matrix-table tr.sub-header th {{ background: var(--bg-subtle); color: var(--text); }}
+# .seat-matrix-table tr.quota-row td {{ font-weight: 600; }}
 
-.badge {{ display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; }}
-.badge-blue {{ color: #2563eb; background: var(--accent-light); }}
-.badge-green {{ color: var(--green); background: var(--green-muted); }}
-.badge-amber {{ color: var(--amber); background: var(--amber-muted); }}
-.badge-purple {{ color: var(--purple); background: var(--purple-muted); }}
+# .badge {{ display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; }}
+# .badge-blue {{ color: #2563eb; background: var(--accent-light); }}
+# .badge-green {{ color: var(--green); background: var(--green-muted); }}
+# .badge-amber {{ color: var(--amber); background: var(--amber-muted); }}
+# .badge-purple {{ color: var(--purple); background: var(--purple-muted); }}
 
-button[data-baseweb="tab"] {{
-    background: transparent !important; color: var(--text-muted) !important;
-    font-size: 0.88rem !important; font-weight: 600 !important;
-    padding: 0.6rem 1.25rem !important; border-radius: 8px !important;
-}}
-button[data-baseweb="tab"][aria-selected="true"] {{ color: #ffffff !important; background: #2563eb !important; }}
-[data-baseweb="tab-highlight"], [data-baseweb="tab-border"] {{ display: none !important; }}
-[data-baseweb="tab-list"] {{
-    gap: 6px !important; background: var(--bg-subtle) !important;
-    border: 1px solid var(--border) !important; border-radius: 12px !important;
-    padding: 4px; margin-bottom: 1.5rem !important;
-}}
+# button[data-baseweb="tab"] {{
+#     background: transparent !important; color: var(--text-muted) !important;
+#     font-size: 0.88rem !important; font-weight: 600 !important;
+#     padding: 0.6rem 1.25rem !important; border-radius: 8px !important;
+# }}
+# button[data-baseweb="tab"][aria-selected="true"] {{ color: #ffffff !important; background: #2563eb !important; }}
+# [data-baseweb="tab-highlight"], [data-baseweb="tab-border"] {{ display: none !important; }}
+# [data-baseweb="tab-list"] {{
+#     gap: 6px !important; background: var(--bg-subtle) !important;
+#     border: 1px solid var(--border) !important; border-radius: 12px !important;
+#     padding: 4px; margin-bottom: 1.5rem !important;
+# }}
 </style>
 """
 st.markdown(theme_vars, unsafe_allow_html=True)
 
-# 3.5. Parent-frame JS eraser — SAFE SELECTORS ONLY (Never touches sidebar controls)
-components.html("""
-<script>
-function eraseStreamlitBranding() {
-    var targets = [
-        'footer', '#MainMenu', '.stDeployButton',
-        '[data-testid="stViewerBadge"]',
-        '.viewerBadge_container__1BShK', '.viewerBadge_link__1S137',
-        'div[class*="viewerBadge"]', 'div[class*="HostedWith"]',
-        'div[class*="styles_viewerBadge"]',
-        'div[class*="embeddedAppMetaInfoBar"]'
-    ];
-    [document, window.parent ? window.parent.document : null].forEach(function(doc) {
-        if (!doc) return;
-        targets.forEach(function(sel) {
-            try {
-                doc.querySelectorAll(sel).forEach(function(el) {
-                    el.style.cssText = 'display:none!important;visibility:hidden!important;opacity:0!important;height:0!important;';
-                    el.remove();
-                });
-            } catch(e) {}
-        });
-    });
-}
-eraseStreamlitBranding();
-setInterval(eraseStreamlitBranding, 300);
-</script>
-""", height=0, width=0)
+# # 3.5. Parent-frame JS eraser — SAFE SELECTORS ONLY (Never touches sidebar controls)
+# components.html("""
+# <script>
+# function eraseStreamlitBranding() {
+#     var targets = [
+#         'footer', '#MainMenu', '.stDeployButton',
+#         '[data-testid="stViewerBadge"]',
+#         '.viewerBadge_container__1BShK', '.viewerBadge_link__1S137',
+#         'div[class*="viewerBadge"]', 'div[class*="HostedWith"]',
+#         'div[class*="styles_viewerBadge"]',
+#         'div[class*="embeddedAppMetaInfoBar"]'
+#     ];
+#     [document, window.parent ? window.parent.document : null].forEach(function(doc) {
+#         if (!doc) return;
+#         targets.forEach(function(sel) {
+#             try {
+#                 doc.querySelectorAll(sel).forEach(function(el) {
+#                     el.style.cssText = 'display:none!important;visibility:hidden!important;opacity:0!important;height:0!important;';
+#                     el.remove();
+#                 });
+#             } catch(e) {}
+#         });
+#     });
+# }
+# eraseStreamlitBranding();
+# setInterval(eraseStreamlitBranding, 300);
+# </script>
+# """, height=0, width=0)
 
 
 
