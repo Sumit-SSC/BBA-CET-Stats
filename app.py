@@ -55,7 +55,7 @@ hide_streamlit_style = """
     [data-testid="stDecoration"], 
     [data-testid="stViewerBadge"],
     [data-testid="stHeader"] button[aria-label="View app source"],
-    [data-testid="stToolbar"],
+    # [data-testid="stToolbar"],
     [data-testid="stFooter"],
     [data-testid="stReportViewFooter"],
     [data-testid="stStatusWidget"],
