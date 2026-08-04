@@ -24,6 +24,10 @@ st.set_page_config(
     initial_sidebar_state="expanded",
     menu_items=None
 )
+# Button to force the sidebar open if closed
+if st.button("Force Open Sidebar"):
+    st.session_state.sidebar_state = "expanded"
+    st.rerun()
 
 hide_streamlit_style = """
             <style>
