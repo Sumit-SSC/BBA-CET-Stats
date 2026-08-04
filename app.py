@@ -169,20 +169,17 @@ button[data-baseweb="tab"][aria-selected="true"] {{ color: #ffffff !important; b
 """
 st.markdown(theme_vars, unsafe_allow_html=True)
 
-# 3.5. Parent-frame JS eraser — runs every 300ms to remove Streamlit Cloud creator badge
+# 3.5. Parent-frame JS eraser — SAFE SELECTORS ONLY (Never touches sidebar controls)
 components.html("""
 <script>
 function eraseStreamlitBranding() {
     var targets = [
         'footer', '#MainMenu', '.stDeployButton',
-        '[data-testid="stDecoration"]', '[data-testid="stViewerBadge"]',
-        '[data-testid="stToolbar"]', '[data-testid="stFooter"]',
-        '[data-testid="stReportViewFooter"]',
+        '[data-testid="stViewerBadge"]',
         '.viewerBadge_container__1BShK', '.viewerBadge_link__1S137',
-        'div[class*="viewerBadge"]', 'div[class*="profile"]',
-        'div[class*="Profile"]', 'div[class*="HostedWith"]',
-        'div[class*="embeddedAppMetaInfoBar"]',
-        'a[href*="github.com"]', 'a[href*="streamlit.io"]'
+        'div[class*="viewerBadge"]', 'div[class*="HostedWith"]',
+        'div[class*="styles_viewerBadge"]',
+        'div[class*="embeddedAppMetaInfoBar"]'
     ];
     [document, window.parent ? window.parent.document : null].forEach(function(doc) {
         if (!doc) return;
@@ -200,6 +197,7 @@ eraseStreamlitBranding();
 setInterval(eraseStreamlitBranding, 300);
 </script>
 """, height=0, width=0)
+
 
 
 def apply_plot_style(fig, height=330, reverse_y=False):
