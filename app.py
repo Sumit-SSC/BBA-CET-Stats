@@ -683,7 +683,7 @@ with tab0:
     st.markdown("### 🎯 Candidate Quota & Seat Availability Finder")
     st.caption("Driven 100% dynamically by your Master Sidebar Filters.")
 
-    sc_col1, sc_col2, sc_col3 = st.columns([5, 3.5, 3.5])
+    sc_col1, sc_col2, sc_col3, sc_col4 = st.columns([3.5, 3, 3, 2.5])
 
     with sc_col1:
         tab0_search = st.text_input(
@@ -709,6 +709,15 @@ with tab0:
             index=0,
             key="tab0_cat_select_master"
         )
+
+    with sc_col4:
+        gender_filter = st.selectbox(
+            "👫 Candidate Gender:",
+            options=["All Seats (General + Ladies)", "♂️ Male (General G Seats)", "♀️ Female (Ladies L + General G)"],
+            index=0,
+            key="tab0_gender_filter_select"
+        )
+
 
     st.markdown("<br/>", unsafe_allow_html=True)
 
